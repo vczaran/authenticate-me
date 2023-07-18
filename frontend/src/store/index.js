@@ -2,10 +2,20 @@ import { createStore, combineReducers, applyMiddleware, compose} from 'redux';
 import thunk from 'redux-thunk';
 import userReducer from './userReducer';
 
+// const entitiesReducer = combineReducers({
+//   users: userReducer
+// })
 
-const rootReducer = combineReducers( () => {
-  users: userReducer(state.users, action)
-})
+// const rootReducer = combineReducers({
+//   entities: entitiesReducer,
+//   sessions: sessionReducer,
+//   ui: uiReducer
+// });
+// THE ABOVE FOR ACTUAL FULLSTACK TO ENSURE APPROPRIATE KEY NESTING
+
+const rootReducer = combineReducers({
+  users: userReducer
+});
 
 
 let enhancer;
