@@ -4,8 +4,7 @@ class ApplicationController < ActionController::API
   protect_from_forgery with: :exception 
 
   rescue_from StandardError, with: :unhandled_error
-  rescue_from ActionController::InvalidAuthenticityToken,
-  with: :invalid_authenticity_token
+  rescue_from ActionController::InvalidAuthenticityToken, with: :invalid_authenticity_token
 
   before_action :snake_case_params, :attach_authenticity_token
   helper_method :current_user, :logged_in?
@@ -21,6 +20,7 @@ class ApplicationController < ActionController::API
 
   def login!(user)
     session[:session_token] = user.reset_session_token!
+    @current_user = user
   end
 
 
@@ -31,10 +31,16 @@ class ApplicationController < ActionController::API
   end
 
   def require_logged_in
-    unless current_user
+    unless logged_in?
       render json: { message: 'Unauthorized' }, status: :unauthorized 
+    end
   end
-end
+
+  def require_logged_out
+    if logged_in?
+      render json: { message: 'Must be logged out'}, status: 403
+    end
+  end
 
 private
 

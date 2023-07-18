@@ -18,7 +18,7 @@ class User < ApplicationRecord
    def self.find_by_credentials(credential, password)
     field = credential =~ URI::MailTo::EMAIL_REGEXP ? :email : :username
     user = User.find_by(field => credential)
-    user&.authenticate(password)
+    user&.authenticate(password) ? user : nil
    end
 
   def reset_session_token!
@@ -29,9 +29,9 @@ class User < ApplicationRecord
   private
 
   def generate_session_token
-  loop do
-    token = SecureRandom::urlsafe_base64
-    break token unless User.exists?(session_token: token)
+    while true
+      token = SecureRandom::urlsafe_base64
+      return token unless User.exists?(session_token: token)
     end
   end
 
