@@ -1,6 +1,7 @@
 import { createStore, combineReducers, applyMiddleware, compose} from 'redux';
 import thunk from 'redux-thunk';
 import userReducer from './userReducer';
+import sessionReducer from './session';
 
 // const entitiesReducer = combineReducers({
 //   users: userReducer
@@ -14,7 +15,8 @@ import userReducer from './userReducer';
 // THE ABOVE FOR ACTUAL FULLSTACK TO ENSURE APPROPRIATE KEY NESTING
 
 const rootReducer = combineReducers({
-  users: userReducer
+  users: userReducer,
+  session: sessionReducer
 });
 
 

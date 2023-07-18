@@ -7,6 +7,7 @@ import App from './App';
 import configureStore from './store';
 import { restoreSession } from './store/csrf';
 import { csrfFetch } from './store/csrf';
+import * as sessionActions from './store/session'
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -31,6 +32,7 @@ function initializeApp() {
   if (process.env.NODE_ENV !== 'production') {
     window.store = store;
     window.csrfFetch = csrfFetch;
+    window.sessionActions = sessionActions;
   }
   
   root.render(
